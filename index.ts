@@ -1,9 +1,17 @@
 ﻿
+
 const all_letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 const dictionary = {};
 
-function encrypt(textToEncrypt) {
+function init(key) {
+    for (let i = 0; i < all_letters.length; i++) {
+        dictionary[all_letters[i]] = all_letters[(i + key) % all_letters.length];
+    }
+}
+
+function encrypt(textToEncrypt, key) {
+    init(key);
     let cipher_txt = "";
 
     // loop to generate ciphertext
@@ -24,7 +32,8 @@ function getKeyByValue(object, value) {
     return Object.keys(object).find(key => object[key] === value);
 }
 
-function decrypt(textToDecrypt) {
+function decrypt(textToDecrypt, key) {
+    init(key);
     let decrypt_txt = "";
 
     for (let i = 0; i < textToDecrypt.length; i++) {
