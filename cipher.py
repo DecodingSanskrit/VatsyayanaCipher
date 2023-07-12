@@ -37,8 +37,9 @@ class cipher:
     def decrypt(textToDecrypt):
         for char in cipher_txt:
             if char in all_letters:
-                temp = dict2[char]
-                decrypt_txt.append(temp)
+                key = [k for k,v in a.items() if v == char]
+                #temp = dict2[char]
+                decrypt_txt.append(key)
             else:
                 temp = char
                 decrypt_txt.append(temp)
