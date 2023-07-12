@@ -9,7 +9,7 @@ namespace VatsyayanaCipher
     public class SubstitutionCipher
     {
         private Dictionary<char, char> valuePairs = new Dictionary<char, char>();
-        private Dictionary<char, char> keyPairs = new Dictionary<char, char>();
+
         private const string allLetters = "abcdefghijklmnopqrstuvwxyzABCDEFGHI" + "JKLMNOPQRSTUVWXYZ";
         public SubstitutionCipher(Dictionary<char,char> keyValues)
         {
@@ -32,12 +32,6 @@ namespace VatsyayanaCipher
                 valuePairs.Add(allLetters[i],
                     allLetters[(i + shiftValue) % allLetters.Length]);
             }
-
-            for (int i = 0; i < allLetters.Length; i++)
-            {
-                keyPairs.Add(allLetters[i],
-                    allLetters[(i - shiftValue + allLetters.Length) % allLetters.Length]);
-            }
         }
 
         public string Encrypt(string textToEncrypt)
@@ -49,7 +43,7 @@ namespace VatsyayanaCipher
             {
                 if (allLetters.IndexOf(c) != -1)
                 {
-                    cipherText.Append(valuePairs);
+                    cipherText.Append(valuePairs[c]);
                 }
                 else
                 {
@@ -69,7 +63,8 @@ namespace VatsyayanaCipher
             {
                 if (allLetters.IndexOf(c) != -1)
                 {
-                    decryptedText.Append(keyPairs);
+                    var key = valuePairs.FirstOrDefault(x => x.Value == c).Key;
+                    decryptedText.Append(key);
                 }
                 else
                 {
